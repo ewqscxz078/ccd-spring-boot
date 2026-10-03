@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.ccd.twse</groupId>
-		<artifactId>ccd-twse-parent</artifactId>
+		<groupId>com.ccd</groupId>
+		<artifactId>ccd-parent</artifactId>
 		<version>25.0.1-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>

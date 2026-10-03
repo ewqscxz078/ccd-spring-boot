@@ -60,7 +60,7 @@
             <dependency><groupId>com.ccd</groupId><artifactId>ccd-system-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
  
             <!-- ccd 自訂 核心業務拆分 -->
-			<dependency><groupId>com.ccd.twse</groupId><artifactId>ccd-twse-web-scraping-data-jpa</artifactId><version>${project.version}</version></dependency>
+			<!-- <dependency><groupId>com.ccd.twse</groupId><artifactId>ccd-twse-web-scraping-data-jpa</artifactId><version>${project.version}</version></dependency> -->
 
 			<!-- in spring-boot-dependencies override -->
 			<dependency><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version></dependency>

@@ -6,7 +6,7 @@
 
     <groupId>com.ccd</groupId>
     <artifactId>ccd-spring-boot-aggregator</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>25.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>

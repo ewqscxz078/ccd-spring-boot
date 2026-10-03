@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.ccd.twse</groupId>
-		<artifactId>ccd-twse-parent</artifactId>
+		<groupId>com.ccd</groupId>
+		<artifactId>ccd-parent</artifactId>
 		<version>25.0.1-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
@@ -24,8 +24,7 @@
 
         <!-- 2. spring boot data jpa 原本自動配置核心(裡面已涵蓋慣用依賴) -->
 
-        <!-- 3. 自訂 data jpa core : data jpa 核心實作擴充邏輯(若有的話) -->
-
+        <!-- 3. 自訂 system core : 核心實作擴充邏輯(若有的話) -->
 
 		<!-- optional 系列 -->
 		<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-configuration-processor</artifactId><optional>true</optional></dependency>

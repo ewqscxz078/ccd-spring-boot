@@ -28,7 +28,7 @@ ccd:
     path:
       config: ${ccd.system.basedir}/${ccd.system.dir}/config # option
       data: ${ccd.system.basedir}/${ccd.system.dir}/data # 永久存放
-      temp: ${ccd.system.basedir}/${ccd.system.dir}/tmp # 暫存、有對應清除機制
+      temp: ${ccd.system.basedir}/${ccd.system.dir}/tmp # 暫存、需有對應清除機制
       log: ${ccd.system.basedir}/${ccd.system.dir}/log
 
 ####################################################

@@ -2,9 +2,7 @@ package com.ccd.autoconfigure.custom.system;
 
 import org.springframework.core.env.Environment;
 
-import com.ccd.twse.profile.EnvProfile;
-
-// import tw.gov.moi.aw3.profile.EnvProfile;
+import com.ccd.profile.EnvProfile;
 
 /**
  *
