@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>com.ccd</groupId>
-	<artifactId>ccd-parent</artifactId>
+	<groupId>com.ccd.boot</groupId>
+	<artifactId>ccd-spring-boot-dependencies</artifactId>
 	<version>25.0.1-SNAPSHOT</version>
 
-	<name>ccd-parent</name>
-	<description>ccd parent</description>
+	<name>ccd-spring-boot-dependencies</name>
+	<description>ccd spring-boot-dependencies</description>
 	<packaging>pom</packaging>
 
 	<url/>
@@ -47,20 +47,20 @@
 			<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-dependencies</artifactId><version>${spring-boot.version}</version><type>pom</type><scope>import</scope></dependency>
 
             <!-- ccd 自訂 基底 starter 核心 -->
-			<dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot</artifactId><version>${project.version}</version></dependency>
-			<dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
-			<dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot-starter-autoconfigure</artifactId><version>${project.version}</version></dependency>
+			<dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-spring-boot</artifactId><version>${project.version}</version></dependency>
+			<dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
+			<dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-spring-boot-starter-autoconfigure</artifactId><version>${project.version}</version></dependency>
 
             <!-- ccd 自訂 各模組之自動配置 -->
-            <dependency><groupId>com.ccd</groupId><artifactId>ccd-data-jpa-spring-boot</artifactId><version>${project.version}</version></dependency>
-            <dependency><groupId>com.ccd</groupId><artifactId>ccd-system-spring-boot</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-data-jpa-spring-boot</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-system-spring-boot</artifactId><version>${project.version}</version></dependency>
 
             <!-- ccd 自訂 starter 依賴入口-->
-            <dependency><groupId>com.ccd</groupId><artifactId>ccd-data-jpa-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
-            <dependency><groupId>com.ccd</groupId><artifactId>ccd-system-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-data-jpa-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-system-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
  
             <!-- ccd 自訂 核心業務拆分 -->
-			<!-- <dependency><groupId>com.ccd.twse</groupId><artifactId>ccd-twse-web-scraping-data-jpa</artifactId><version>${project.version}</version></dependency> -->
+			<!-- <dependency><groupId>com.ccd.boot.twse</groupId><artifactId>ccd-twse-web-scraping-data-jpa</artifactId><version>${project.version}</version></dependency> -->
 
 			<!-- in spring-boot-dependencies override -->
 			<dependency><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version></dependency>

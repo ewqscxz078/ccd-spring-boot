@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.ccd</groupId>
-		<artifactId>ccd-parent</artifactId>
+		<groupId>com.ccd.boot</groupId>
+		<artifactId>ccd-spring-boot-dependencies</artifactId>
 		<version>25.0.1-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
@@ -21,7 +21,7 @@
 
         <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter</artifactId></dependency>
 
-        <dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot-starter-autoconfigure</artifactId></dependency>
+        <dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-spring-boot-starter-autoconfigure</artifactId></dependency>
     </dependencies>
 
 

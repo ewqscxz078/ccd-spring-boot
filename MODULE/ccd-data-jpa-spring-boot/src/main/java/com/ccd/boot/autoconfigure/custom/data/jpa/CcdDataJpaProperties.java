@@ -1,4 +1,4 @@
-package com.ccd.autoconfigure.custom.data.jpa;
+package com.ccd.boot.autoconfigure.custom.data.jpa;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

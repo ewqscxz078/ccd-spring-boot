@@ -21,8 +21,8 @@ ccd:
     jpa:
       scan:
         enable: true
-        entity-packages: com.ccd.**.data.jpa.entity #多個請用,分隔
-        repository-packages: com.ccd.**.data.jpa.repository #多個請用,分隔
+        entity-packages: com.ccd.boot.**.data.jpa.entity #多個請用,分隔
+        repository-packages: com.ccd.boot.**.data.jpa.repository #多個請用,分隔
 
 ####################################################
 ################ 以下 spring boot 內建 ################

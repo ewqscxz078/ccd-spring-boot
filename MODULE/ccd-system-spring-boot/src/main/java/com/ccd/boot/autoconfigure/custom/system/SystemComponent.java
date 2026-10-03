@@ -1,4 +1,4 @@
-package com.ccd.autoconfigure.custom.system;
+package com.ccd.boot.autoconfigure.custom.system;
 
 public interface SystemComponent {
 	public String getId();

@@ -99,7 +99,7 @@ create_root_pom() {
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ccd</groupId>
+    <groupId>com.ccd.boot</groupId>
     <artifactId>ccd-spring-boot-aggregator</artifactId>
     <version>25.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>

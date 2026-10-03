@@ -5,7 +5,7 @@
 
 	<include resource="ccd/config/built-in/logback/default/logback-base.xml" />
 
-    <logger name="com.ccd.twse" level="DEBUG" />
+    <logger name="com.ccd.boot.twse" level="DEBUG" />
 
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />

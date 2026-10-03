@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.ccd</groupId>
-		<artifactId>ccd-parent</artifactId>
+		<groupId>com.ccd.boot</groupId>
+		<artifactId>ccd-spring-boot-dependencies</artifactId>
 		<version>25.0.1-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
@@ -20,7 +20,7 @@
 	<dependencies>
 
         <!-- 1. 為了引用跨 spring boot 自訂定義 class -->
-        <dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot</artifactId></dependency> <!-- use CcdPrefixConfigurationProperties-->
+        <dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-spring-boot</artifactId></dependency> <!-- use CcdPrefixConfigurationProperties-->
 
         <!-- 2. spring boot data jpa 原本自動配置核心(裡面已涵蓋慣用依賴) -->
 

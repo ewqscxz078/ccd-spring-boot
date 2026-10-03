@@ -1,4 +1,4 @@
-package com.ccd.properties;
+package com.ccd.boot.properties;
 
 /**
  *

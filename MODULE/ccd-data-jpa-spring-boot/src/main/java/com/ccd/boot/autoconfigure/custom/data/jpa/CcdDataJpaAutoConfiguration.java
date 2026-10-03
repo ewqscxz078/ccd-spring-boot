@@ -1,4 +1,4 @@
-package com.ccd.autoconfigure.custom.data.jpa;
+package com.ccd.boot.autoconfigure.custom.data.jpa;
 
 import javax.sql.DataSource;
 
@@ -12,7 +12,7 @@ import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.ccd.properties.CcdPrefixConfigurationProperties;
+import com.ccd.boot.properties.CcdPrefixConfigurationProperties;
 
 // ref spring-boot-actoconfigure / DataJpaRepositoriesAutoConfiguration.java
 @AutoConfiguration(before = { //

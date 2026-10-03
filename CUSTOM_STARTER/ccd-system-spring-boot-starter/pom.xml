@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.ccd</groupId>
-		<artifactId>ccd-parent</artifactId>
+		<groupId>com.ccd.boot</groupId>
+		<artifactId>ccd-spring-boot-dependencies</artifactId>
 		<version>25.0.1-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
@@ -21,10 +21,10 @@
         <!-- 1. 原本 spring boot data jpa 依賴入口 -->
 
         <!-- 2. 自訂 基底 starter -->
-        <dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot-starter</artifactId></dependency>
+        <dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-spring-boot-starter</artifactId></dependency>
 
         <!-- 3. 自訂 data jpa 自動配置 -->
-        <dependency><groupId>com.ccd</groupId><artifactId>ccd-system-spring-boot</artifactId></dependency>
+        <dependency><groupId>com.ccd.boot</groupId><artifactId>ccd-system-spring-boot</artifactId></dependency>
 
     </dependencies>
 

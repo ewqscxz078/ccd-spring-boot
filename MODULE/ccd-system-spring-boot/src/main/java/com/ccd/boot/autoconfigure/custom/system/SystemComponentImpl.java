@@ -1,8 +1,8 @@
-package com.ccd.autoconfigure.custom.system;
+package com.ccd.boot.autoconfigure.custom.system;
 
 import org.springframework.core.env.Environment;
 
-import com.ccd.profile.EnvProfile;
+import com.ccd.boot.profile.EnvProfile;
 
 /**
  *

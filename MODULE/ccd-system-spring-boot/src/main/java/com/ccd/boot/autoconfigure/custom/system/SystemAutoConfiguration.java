@@ -1,4 +1,4 @@
-package com.ccd.autoconfigure.custom.system;
+package com.ccd.boot.autoconfigure.custom.system;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 // import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import com.ccd.autoconfigure.custom.system.SystemProperties.Path;
+import com.ccd.boot.autoconfigure.custom.system.SystemProperties.Path;
 
 // ref spring-boot-actoconfigure
 @Configuration

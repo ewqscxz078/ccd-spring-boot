@@ -1,11 +1,11 @@
-package com.ccd.profile;
+package com.ccd.boot.profile;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.ccd.profile.EnvProfile;
+import com.ccd.boot.profile.EnvProfile;
 
 public class EnvProfileTest {
 	// ================================================

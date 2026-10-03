@@ -1,1 +1,1 @@
-com.ccd.autoconfigure.custom.data.jpa.CcdDataJpaAutoConfiguration
+com.ccd.boot.autoconfigure.custom.data.jpa.CcdDataJpaAutoConfiguration

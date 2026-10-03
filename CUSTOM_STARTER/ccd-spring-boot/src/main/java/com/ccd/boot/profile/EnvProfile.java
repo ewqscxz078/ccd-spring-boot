@@ -1,4 +1,4 @@
-package com.ccd.profile;
+package com.ccd.boot.profile;
 
 import java.util.Arrays;
 import java.util.HashSet;
