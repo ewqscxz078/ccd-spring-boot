@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.ccd</groupId>
+		<artifactId>ccd-parent</artifactId>
+		<version>25.0.1-SNAPSHOT</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<artifactId>ccd-spring-boot</artifactId>
+	<name>ccd-spring-boot</name>
+	<description>通用底層，跟spring boot 有關之跨starter會用到的</description>
+	
+	<properties>
+	</properties>
+
+	<dependencies>
+		<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot</artifactId></dependency>
+
+        <!-- 其他第三方系列 -->
+        <dependency><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></dependency>
+
+		<!-- test 系列 -->
+        <dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter</artifactId><scope>test</scope></dependency>
+
+	</dependencies>
+
+</project>

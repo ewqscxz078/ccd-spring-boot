@@ -1,0 +1,39 @@
+# 覆蓋預設設定，若設定重複則以 active profile 為主
+# 1.if want override default 解開需要的複寫或是透過第2、3步驟找到其預設
+# 2.按下 alt + / 或輸入關鍵字後按下 alt + / 則會跳出相關可設定的自動完成項目
+# 3.若點擊其上一步自動完成項目，會跳到其 XXXXproperties.java  
+####################################################
+################ 以下 該專案自訂 ########################
+####################################################
+# 正式環境上一定要設定 -DBASEDIR=內容 or by docker env
+# ref ccd/config/custom/system/ccd-default-system.yml 之 BASEDIR 
+
+####################################################
+########## 第三方 spring boot starter ################
+####################################################
+
+####################################################
+############ 以下 ccd custom starter ################
+####################################################
+
+#logback:
+#  pattern:
+#    console: '%d{MM/dd-HH:mm:ss.SSS}|%-7X{threadName}|%-22X{traceId}|%-22X{spanId}|%-9X{userId}|%-9X{taskCode}|%-15X{userIp}|%.-1level|%msg\(%c:%L\)%n'
+#    file:
+#      roll: '%d{MM/dd-HH:mm:ss.SSS}|%-7X{threadName}|%-22X{traceId}|%-22X{spanId}|%-9X{userId}|%-9X{taskCode}|%-15X{userIp}|%.-1level|%msg\(%c:%L\)%n'
+#  file:
+#    roll:
+#      name: ${ccd.system.id}
+#      min: 1
+#      max: 5
+#      max-size: 50MB
+#      immediate-flush: true
+
+####################################################
+################ 以下 spring boot 內建 ################
+####################################################
+
+
+
+logging:
+  config: classpath:ccd/config/built-in/logback/ccd-logback-spring.xml

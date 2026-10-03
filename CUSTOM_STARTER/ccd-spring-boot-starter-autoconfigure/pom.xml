@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.ccd</groupId>
+		<artifactId>ccd-parent</artifactId>
+		<version>25.0.1-SNAPSHOT</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+ 
+	<!-- 通用自訂義 spring-boot-starter-autoconfigure 實作註冊 -->
+	<artifactId>ccd-spring-boot-starter-autoconfigure</artifactId>
+	<name>ccd-spring-boot-starter-autoconfigure</name>
+	<description>跨 starter 通用自動配置設定</description>
+
+	<properties>
+	</properties>
+
+	<dependencies>
+
+		<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter</artifactId></dependency>
+		
+		<dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot</artifactId></dependency>
+
+		<!-- optional 系列 -->
+		<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-configuration-processor</artifactId><optional>true</optional></dependency> <!-- yml 會有提示 -->
+
+		<!-- test 系列 -->
+        <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-test</artifactId><scope>test</scope></dependency>
+	</dependencies>
+
+</project>

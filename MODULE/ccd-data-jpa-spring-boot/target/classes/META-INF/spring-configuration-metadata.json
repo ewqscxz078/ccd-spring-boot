@@ -1,0 +1,40 @@
+{
+  "groups": [
+    {
+      "name": "ccd.data.jpa",
+      "type": "com.ccd.autoconfigure.custom.data.jpa.CcdDataJpaProperties",
+      "sourceType": "com.ccd.autoconfigure.custom.data.jpa.CcdDataJpaProperties"
+    },
+    {
+      "name": "ccd.data.jpa.scan",
+      "type": "com.ccd.autoconfigure.custom.data.jpa.CcdDefaultDataJpaScanProperties",
+      "sourceType": "com.ccd.autoconfigure.custom.data.jpa.CcdDefaultDataJpaScanProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ccd.data.jpa.enable",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.ccd.autoconfigure.custom.data.jpa.CcdDataJpaProperties"
+    },
+    {
+      "name": "ccd.data.jpa.scan.enable",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.ccd.autoconfigure.custom.data.jpa.CcdDefaultDataJpaScanProperties"
+    },
+    {
+      "name": "ccd.data.jpa.scan.entity-packages",
+      "type": "java.lang.String",
+      "sourceType": "com.ccd.autoconfigure.custom.data.jpa.CcdDefaultDataJpaScanProperties"
+    },
+    {
+      "name": "ccd.data.jpa.scan.repository-packages",
+      "type": "java.lang.String",
+      "sourceType": "com.ccd.autoconfigure.custom.data.jpa.CcdDefaultDataJpaScanProperties"
+    }
+  ],
+  "hints": [],
+  "ignored": {
+    "properties": []
+  }
+}

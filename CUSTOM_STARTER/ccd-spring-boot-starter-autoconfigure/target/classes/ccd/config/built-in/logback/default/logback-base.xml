@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<included>
+
+	<!-- 每個專案必須設定 -->
+	<springProperty name="system.path.log" source="ccd.system.path.log"/>
+
+	<!-- 每個專案必須設定 -->
+	<springProperty name="logback.file.roll.name" source="ccd.system.id"/> 
+
+	<!-- ae logback starter 提供預設 -->
+	<springProperty scope="context" name="logback.pattern.console" source="logback.pattern.console" defaultValue="%d{MM/dd-HH:mm:ss.SSS}|%-7X{threadName}|%-22X{traceId}|%-22X{spanId}|%-9X{userId}|%-9X{taskCode}|%-15X{userIp}|%.-1level|%msg\(%c:%L\)%n"/> 
+	<!-- ae logback starter 提供預設 -->
+	<springProperty scope="context" name="logback.pattern.file.roll" source="logback.pattern.file.roll" defaultValue="%d{MM/dd-HH:mm:ss.SSS}|%-7X{threadName}|%-22X{traceId}|%-22X{spanId}|%-9X{userId}|%-9X{taskCode}|%-15X{userIp}|%.-1level|%msg\(%c:%L\)%n"/>
+
+	<springProperty name="logback.file.roll.min" source="logback.file.roll.min" defaultValue="1"/>
+	<springProperty name="logback.file.roll.max" source="logback.file.roll.max"  defaultValue="5"/>
+	<springProperty name="logback.file.roll.max-size" source="logback.file.roll.max-size" defaultValue="50MB"/>
+	<springProperty name="logback.file.roll.immediate-flush" source="logback.file.roll.immediate-flush" defaultValue="true"/>
+
+    <!-- 禁止 logback 輸出 INIT 狀態 -->
+    <!-- <statusListener class="ch.qos.logback.core.status.NopStatusListener" /> -->
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+            <!-- <pattern>%d{MM/dd-HH:mm:ss.SSS}|%-7X{threadName}|%-22X{traceId}|%-22X{spanId}|%-9X{userId}|%-9X{taskCode}|%-15X{userIp}|%.-1level|%msg\(%c:%L\)%n</pattern> -->
+            <pattern>${logback.pattern.console}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE-ROLL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${system.path.log}/${logback.file.roll.name}-server.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>${system.path.log}/${logback.file.roll.name}-server.log.%i.gz</FileNamePattern>
+			<MinIndex>${logback.file.roll.min}</MinIndex>
+			<MaxIndex>${logback.file.roll.max}</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>${logback.file.roll.max-size}</MaxFileSize>
+        </triggeringPolicy>
+		<encoder>
+			<pattern>${logback.pattern.file.roll}</pattern>
+		</encoder>
+		<immediateFlush>${logback.file.roll.immediate-flush}</immediateFlush>
+	</appender>
+
+    <logger name="org" level="WARN" />
+    <logger name="oracle" level="WARN" />
+    <logger name="com.sun" level="WARN" />
+    <logger name="org.apache" level="WARN" />
+    <logger name="com.googlecode" level="WARN" />
+    <logger name="org.springframework.boot" level="INFO" />
+    <logger name="org.springframework" level="WARN" />
+    <logger name="org.springframework.web" level="WARN" />
+    <logger name="org.hibernate" level="WARN" />
+    <logger name="org.hibernate.SQL" level="WARN" />
+
+</included>

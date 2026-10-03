@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.ccd</groupId>
+		<artifactId>ccd-parent</artifactId>
+		<version>25.0.1-SNAPSHOT</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+    <artifactId>ccd-data-jpa-spring-boot-starter</artifactId>
+    <name>CCD DATA JPA SPRING BOOT STARTER</name>
+    <description>CCD JPA 場景啟動器之依賴入口</description>
+
+    <properties>
+    </properties>
+
+    <dependencies>
+        <!-- 1. 原本 spring boot data jpa 依賴入口 -->
+        <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-data-jpa</artifactId></dependency>
+
+        <!-- 2. 自訂 基底 starter -->
+        <dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot-starter</artifactId></dependency>
+
+        <!-- 3. 自訂 data jpa 自動配置 -->
+        <dependency><groupId>com.ccd</groupId><artifactId>ccd-data-jpa-spring-boot</artifactId></dependency>
+
+    </dependencies>
+
+</project>

@@ -1,0 +1,35 @@
+# 覆蓋預設設定，若設定重複則以 active profile 為主
+# 1.if want override default 解開需要的複寫或是透過第2、3步驟找到其預設
+# 2.按下 alt + / 或輸入關鍵字後按下 alt + / 則會跳出相關可設定的自動完成項目
+# 3.若點擊其上一步自動完成項目，會跳到其 XXXXproperties.java 
+####################################################
+################ 以下 該專案自訂 ########################
+####################################################
+# 正式環境上一定要設定 -DBASEDIR=內容 or by docker env
+# ref ccd/config/custom/system/ccd-default-system.yml 之 BASEDIR
+
+####################################################
+########## 第三方 spring boot starter ################
+####################################################
+
+####################################################
+############ 以下 ccd custom starter ################
+####################################################
+
+####################################################
+################ 以下 spring boot 內建 ################
+####################################################
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+#        exclude: shutdown
+#        exclude: threaddump,heapdump
+#    access:
+#      default: unrestricted
+  endpoint:
+    health:
+      show-details: always

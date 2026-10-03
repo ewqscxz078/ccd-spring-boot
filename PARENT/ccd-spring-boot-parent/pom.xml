@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.ccd</groupId>
+	<artifactId>ccd-parent</artifactId>
+	<version>25.0.1-SNAPSHOT</version>
+
+	<name>ccd-parent</name>
+	<description>ccd parent</description>
+	<packaging>pom</packaging>
+
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+
+	<properties>
+		<java.version>25</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<spring-cloud.version>2025.1.0</spring-cloud.version>
+		<spring-boot.version>4.0.1</spring-boot.version>
+
+		<!-- spring-boot-dependencies 相關 -->
+		<commons-lang3.version>3.20.0</commons-lang3.version>
+
+		<!-- plugin 系列 -->
+		<maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version> <!-- ref spring-boot-dependencies -->
+        <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version> <!-- 修改 maven 預設時間格式與時區 ref spring-boot-dependencies -->
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version> <!-- 指定編譯含source and source line ref spring-boot-dependencies -->
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency><groupId>org.springframework.cloud</groupId><artifactId>spring-cloud-dependencies</artifactId><version>${spring-cloud.version}</version><type>pom</type><scope>import</scope></dependency>
+			<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-dependencies</artifactId><version>${spring-boot.version}</version><type>pom</type><scope>import</scope></dependency>
+
+            <!-- ccd 自訂 基底 starter 核心 -->
+			<dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot</artifactId><version>${project.version}</version></dependency>
+			<dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
+			<dependency><groupId>com.ccd</groupId><artifactId>ccd-spring-boot-starter-autoconfigure</artifactId><version>${project.version}</version></dependency>
+
+            <!-- ccd 自訂 各模組之自動配置 -->
+            <dependency><groupId>com.ccd</groupId><artifactId>ccd-data-jpa-spring-boot</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>com.ccd</groupId><artifactId>ccd-system-spring-boot</artifactId><version>${project.version}</version></dependency>
+
+            <!-- ccd 自訂 starter 依賴入口-->
+            <dependency><groupId>com.ccd</groupId><artifactId>ccd-data-jpa-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
+            <dependency><groupId>com.ccd</groupId><artifactId>ccd-system-spring-boot-starter</artifactId><version>${project.version}</version></dependency>
+ 
+            <!-- ccd 自訂 核心業務拆分 -->
+			<dependency><groupId>com.ccd.twse</groupId><artifactId>ccd-twse-web-scraping-data-jpa</artifactId><version>${project.version}</version></dependency>
+
+			<!-- in spring-boot-dependencies override -->
+			<dependency><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version></dependency>
+
+			<!-- not in spring-boot-dependencies 第三方系列 -->
+			<dependency><groupId>org.apache.commons</groupId><artifactId>commons-csv</artifactId><version>1.14.1</version></dependency>
+			<dependency><groupId>org.jsoup</groupId><artifactId>jsoup</artifactId><version>1.21.2</version></dependency> <!-- 解析 html -->
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+	            <!-- 修改 maven build.time 預設時間格式與時區:UTC 美國 => 台灣 -->
+	            <plugin>
+	                <groupId>org.codehaus.mojo</groupId>
+	                <artifactId>build-helper-maven-plugin</artifactId>
+	                <version>${build-helper-maven-plugin.version}</version>
+	                <executions>
+	                    <execution>
+	                        <id>timestamp-property</id>
+	                        <goals>
+	                            <goal>timestamp-property</goal>
+	                        </goals>
+	                        <configuration>
+	                            <name>build.time</name>
+	                            <pattern>yyyyMMdd-HHmmss</pattern>
+	                            <locale>zh_TW</locale>
+	                            <timeZone>GMT+8</timeZone>
+	                        </configuration>
+	                    </execution>
+	                </executions>
+	            </plugin>
+	            <plugin>
+	                <!-- maven 限定編譯 -->
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-compiler-plugin</artifactId>
+	                <version>${maven-compiler-plugin.version}</version>
+	                <configuration>
+	                    <encoding>${project.build.sourceEncoding}</encoding>
+	                    <source>${java.version}</source>
+	                    <target>${java.version}</target>
+	                    <showDeprecation>true</showDeprecation>
+	                    <showWarnings>true</showWarnings>
+						<annotationProcessorPaths>
+							<path>
+								<groupId>org.springframework.boot</groupId>
+								<artifactId>spring-boot-configuration-processor</artifactId>
+							</path>
+						</annotationProcessorPaths>
+	                </configuration>
+	            </plugin>
+	            <plugin>
+	                <!-- 指令為 mvn source:jar -->
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-source-plugin</artifactId>
+	                <version>${maven-source-plugin.version}</version>
+	                <executions>
+	                    <!-- 目的在於執行install 於repository 會產生sources的jar檔於當中 -->
+	                    <execution>
+	                        <id>attach-sources</id>
+	                        <goals>
+	                            <goal>jar</goal>
+	                        </goals>
+	                    </execution>
+	                </executions>
+	            </plugin>
+				<!-- 覆蓋 Spring Boot 預設插件配置 -->
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring-boot.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+        <!-- default war/jar name -->
+        <finalName>${project.artifactId}</finalName>
+	</build>
+
+</project>
