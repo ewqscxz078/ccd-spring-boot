@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>CORE/ccd-system</module>
         <module>CUSTOM_STARTER/ccd-data-jpa-spring-boot-starter</module>
         <module>CUSTOM_STARTER/ccd-spring-boot</module>
         <module>CUSTOM_STARTER/ccd-spring-boot-starter</module>

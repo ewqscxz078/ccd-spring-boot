@@ -4,14 +4,14 @@
 #
 # 使用方式（可從任意目錄執行）：
 #   sh SCRIPTS/validate-maven-modules.sh
-#       檢查所有 Maven 子模組是否已宣告於專案根目錄的 pom.xml。
-#       若有缺漏則回傳 exit code 1，適合用於 CI 驗證。
+#       檢查所有 Maven 子模組是否已宣告於專案根目錄的 pom.xml，
+#       並檢查 pom.xml 宣告的模組是否仍存在於磁碟；若不一致則回傳 exit code 1。
 #
 #   sh SCRIPTS/validate-maven-modules.sh --checkLost
-#       列出尚未宣告於根 pom.xml 的 Maven 子模組；有缺漏時回傳 exit code 1。
+#       列出未宣告的 Maven 子模組，以及已宣告但不存在於磁碟的模組。
 #
 #   sh SCRIPTS/validate-maven-modules.sh --fix
-#       自動將缺漏的 Maven 子模組補入根 pom.xml；若根 pom.xml 不存在則建立聚合 POM。
+#       補入未宣告的子模組並移除不存在的模組宣告；若根 pom.xml 不存在則建立聚合 POM。
 #
 # 若目前位於 SCRIPTS 目錄，也可改用：
 #   ./validate-maven-modules.sh [--checkLost | --fix]
@@ -27,9 +27,9 @@ usage() {
     cat <<'EOF'
 Usage: ./validate-maven-modules.sh [--checkLost | --fix]
 
-  no option     Check whether every Maven submodule is declared in the root pom.xml.
-  --checkLost   List Maven submodules missing from the root pom.xml.
-  --fix         Add missing Maven submodules to the root pom.xml.
+  no option     Check whether pom.xml declarations and modules on disk are in sync.
+  --checkLost   List undeclared modules and declarations whose modules no longer exist.
+  --fix         Add undeclared modules and remove stale module declarations.
 EOF
 }
 
@@ -59,7 +59,8 @@ trap 'rm -rf "$WORK_DIR"' EXIT HUP INT TERM
 
 DISCOVERED="$WORK_DIR/discovered"
 DECLARED="$WORK_DIR/declared"
-MISSING="$WORK_DIR/missing"
+UNDECLARED="$WORK_DIR/undeclared"
+STALE="$WORK_DIR/stale"
 
 # Every pom.xml below the repository root is considered a Maven submodule.
 # Build output and VCS metadata are excluded so generated/copied POMs are ignored.
@@ -80,13 +81,14 @@ read_declared_modules() {
         LC_ALL=C sort -u > "$DECLARED" || :
 }
 
-find_missing_modules() {
+find_module_differences() {
     read_declared_modules
-    awk 'FILENAME == ARGV[1] { declared[$0] = 1; next } !($0 in declared)' "$DECLARED" "$DISCOVERED" > "$MISSING"
+    awk 'FILENAME == ARGV[1] { declared[$0] = 1; next } !($0 in declared)' "$DECLARED" "$DISCOVERED" > "$UNDECLARED"
+    awk 'FILENAME == ARGV[1] { discovered[$0] = 1; next } !($0 in discovered)' "$DISCOVERED" "$DECLARED" > "$STALE"
 }
 
-missing_count() {
-    awk 'END { print NR + 0 }' "$MISSING"
+line_count() {
+    awk 'END { print NR + 0 }' "$1"
 }
 
 create_root_pom() {
@@ -114,7 +116,7 @@ add_missing_modules() {
     while IFS= read -r module; do
         escaped=$(printf '%s' "$module" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g')
         printf '        <module>%s</module>\n' "$escaped" >> "$ADDITIONS"
-    done < "$MISSING"
+    done < "$UNDECLARED"
 
     UPDATED_POM="$WORK_DIR/pom.xml"
     if grep -q '</modules>' "$ROOT_POM"; then
@@ -143,8 +145,44 @@ add_missing_modules() {
     mv "$UPDATED_POM" "$ROOT_POM"
 }
 
-find_missing_modules
-COUNT=$(missing_count)
+remove_stale_modules() {
+    UPDATED_POM="$WORK_DIR/pom-without-stale-modules.xml"
+    awk '
+        FILENAME == ARGV[1] {
+            stale[$0] = 1
+            next
+        }
+        {
+            original = $0
+            remaining = $0
+            result = ""
+            while (match(remaining, /<module>[[:space:]]*[^<]+[[:space:]]*<\/module>/)) {
+                prefix = substr(remaining, 1, RSTART - 1)
+                element = substr(remaining, RSTART, RLENGTH)
+                remaining = substr(remaining, RSTART + RLENGTH)
+
+                module = element
+                sub(/^<module>[[:space:]]*/, "", module)
+                sub(/[[:space:]]*<\/module>$/, "", module)
+                gsub(/\\/, "/", module)
+                sub(/^\.\//, "", module)
+                sub(/\/+$/, "", module)
+                sub(/\/pom[.]xml$/, "", module)
+
+                result = result prefix
+                if (!(module in stale)) result = result element
+            }
+            result = result remaining
+            if (original ~ /<module>/ && result ~ /^[[:space:]]*$/) next
+            print result
+        }
+    ' "$STALE" "$ROOT_POM" > "$UPDATED_POM"
+    mv "$UPDATED_POM" "$ROOT_POM"
+}
+
+find_module_differences
+UNDECLARED_COUNT=$(line_count "$UNDECLARED")
+STALE_COUNT=$(line_count "$STALE")
 
 case "$MODE" in
     check)
@@ -152,31 +190,47 @@ case "$MODE" in
             printf 'ERROR: Root pom.xml does not exist. Run with --checkLost or --fix.\n' >&2
             exit 1
         fi
-        if [ "$COUNT" -ne 0 ]; then
-            printf 'ERROR: %s Maven submodule(s) are missing from pom.xml. Run with --checkLost for details.\n' "$COUNT" >&2
+        if [ "$UNDECLARED_COUNT" -ne 0 ] || [ "$STALE_COUNT" -ne 0 ]; then
+            printf 'ERROR: pom.xml is out of sync: %s Maven submodule(s) are undeclared; %s declared Maven module(s) are missing on disk. Run with --checkLost for details.\n' \
+                "$UNDECLARED_COUNT" "$STALE_COUNT" >&2
             exit 1
         fi
-        printf 'OK: All Maven submodules are declared in pom.xml.\n'
+        printf 'OK: All Maven submodules are declared and exist on disk.\n'
         ;;
     list)
-        if [ "$COUNT" -eq 0 ]; then
-            printf 'No missing Maven submodules.\n'
+        if [ "$UNDECLARED_COUNT" -eq 0 ] && [ "$STALE_COUNT" -eq 0 ]; then
+            printf 'No Maven module differences found.\n'
             exit 0
         fi
-        printf 'Missing Maven submodules (%s):\n' "$COUNT"
-        sed 's/^/  - /' "$MISSING"
+        if [ "$UNDECLARED_COUNT" -ne 0 ]; then
+            printf 'Missing Maven submodules (%s):\n' "$UNDECLARED_COUNT"
+            sed 's/^/  - /' "$UNDECLARED"
+        fi
+        if [ "$STALE_COUNT" -ne 0 ]; then
+            printf 'Declared Maven modules missing on disk (%s):\n' "$STALE_COUNT"
+            sed 's/^/  - /' "$STALE"
+        fi
         exit 1
         ;;
     fix)
-        if [ "$COUNT" -eq 0 ]; then
+        CREATED_ROOT_POM=0
+        if [ ! -f "$ROOT_POM" ]; then
+            create_root_pom
+            CREATED_ROOT_POM=1
+        fi
+        if [ "$STALE_COUNT" -ne 0 ]; then
+            remove_stale_modules
+            printf 'Removed %s stale Maven module declaration(s):\n' "$STALE_COUNT"
+            sed 's/^/  - /' "$STALE"
+        fi
+        if [ "$UNDECLARED_COUNT" -ne 0 ]; then
+            add_missing_modules
+            printf 'Added %s Maven submodule(s) to pom.xml:\n' "$UNDECLARED_COUNT"
+            sed 's/^/  - /' "$UNDECLARED"
+        fi
+        if [ "$UNDECLARED_COUNT" -eq 0 ] && [ "$STALE_COUNT" -eq 0 ] && [ "$CREATED_ROOT_POM" -eq 0 ]; then
             printf 'No missing Maven submodules; pom.xml was not changed.\n'
             exit 0
         fi
-        if [ ! -f "$ROOT_POM" ]; then
-            create_root_pom
-        fi
-        add_missing_modules
-        printf 'Added %s Maven submodule(s) to pom.xml:\n' "$COUNT"
-        sed 's/^/  - /' "$MISSING"
         ;;
 esac

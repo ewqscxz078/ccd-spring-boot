@@ -220,6 +220,44 @@ EOF
     assert_contains "$OUTPUT" 'All Maven submodules are declared' || return 1
 }
 
+test_removed_module_is_detected_and_fixed() {
+    new_fixture removed-module
+    create_module alpha
+    cat > "$FIXTURE/pom.xml" <<'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example</groupId>
+    <artifactId>removed-module-aggregator</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>alpha</module>
+        <module>CORE/removed-module</module>
+    </modules>
+</project>
+EOF
+
+    run_subject
+    assert_status 1 || return 1
+    assert_contains "$OUTPUT" '1 declared Maven module(s) are missing on disk' || return 1
+
+    run_subject --checkLost
+    assert_status 1 || return 1
+    assert_contains "$OUTPUT" 'Declared Maven modules missing on disk (1):' || return 1
+    assert_contains "$OUTPUT" '  - CORE/removed-module' || return 1
+
+    run_subject --fix
+    assert_status 0 || return 1
+    assert_contains "$OUTPUT" 'Removed 1 stale Maven module declaration(s)' || return 1
+    assert_occurrences "$FIXTURE/pom.xml" '<module>alpha</module>' 1 || return 1
+    assert_occurrences "$FIXTURE/pom.xml" '<module>CORE/removed-module</module>' 0 || return 1
+
+    run_subject
+    assert_status 0 || return 1
+    assert_contains "$OUTPUT" 'All Maven submodules are declared and exist on disk' || return 1
+}
+
 test_invalid_arguments_return_usage_error() {
     new_fixture invalid-arguments
 
@@ -256,6 +294,7 @@ run_test '--fix creates a root POM and remains idempotent' test_fix_creates_root
 run_test '--fix preserves and extends an existing root POM' test_fix_adds_modules_section_to_existing_pom
 run_test '--fix adds only modules that are missing' test_fix_only_adds_missing_modules
 run_test 'declared module paths are normalized before comparison' test_declared_module_paths_are_normalized
+run_test 'removed modules still declared in pom.xml are detected and fixed' test_removed_module_is_detected_and_fixed
 run_test 'invalid arguments return exit status 2' test_invalid_arguments_return_usage_error
 
 printf '\nResult: %s passed, %s failed\n' "$PASSED" "$FAILED"
