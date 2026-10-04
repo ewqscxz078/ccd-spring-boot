@@ -7,7 +7,7 @@
 		<groupId>com.ccd.boot</groupId>
 		<artifactId>ccd-spring-boot-dependencies</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath>../../PLATFORM/ccd-spring-boot-dependencies/pom.xml</relativePath>
 	</parent>
 
     <artifactId>ccd-data-jpa-spring-boot-starter</artifactId>
